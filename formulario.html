@@ -1,0 +1,158 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+<div id="app">
+<h1>CADASTRO</h1>
+
+<form @submit.prevent="enviar()">
+    <label for="nome">Nome: *</label>
+    <input type="text" v-model="user.nome" required><br>
+
+    <label for="email">E-mail: *</label>
+    <input type="email" v-model="user.email" required><br>
+
+    <label>Tempo de experiência (Em anos): * </label> 
+    <input type="number" v-model="user.tempoExperiencia" required ><br>
+
+    <label>Fale um pouco sobre você e suas experiências: </label>
+    <textarea v-model="sobreVoce" cols="20" rows="4"></textarea><br>
+
+    <label >Tecnologias: </label>
+    <span>
+        <input type="checkbox" value="javascript" v-model="tecnologias" > Javascript
+    </span>
+   
+    <span>
+        <input type="checkbox" value="Python" v-model="tecnologias"> Python
+    </span>
+   
+    <span>
+        <input type="checkbox" value="Java" v-model="tecnologias"> Java
+    </span><br>
+
+    <label>Senioridade: </label>
+        <select v-model="tipoSelecionado">
+        <option v-for="item in senioridade" :key="item.id" v-bind:value="item.nome">{{item.nome}}</option>
+                      <!--O v-for vai percorrer pelo array-->
+    </select>
+    <br>
+    <label>Preferência em modalidade de trabalho: </label>
+    <span>
+        <input type="radio" value="remoto" v-model="modalidade">Remoto
+    </span>
+    <span>
+        <input type="radio" value="presencial" v-model="modalidade">Presencial
+    </span>
+    <span>
+        <input type="radio" value="hibrido" v-model="modalidade">Híbrido
+    </span><br><br>
+
+    <button type="submit">Enviar</button>
+
+</form>
+
+   
+<br>
+<hr>
+<div class="item" v-show="resultado"><!--Essas info só irão aparecer se usuário estiver logado, ou seja, qnd for true-->
+   <h2>Usuário cadastrado: </h2> 
+   <label>Nome: {{user.nome}}</label><br><br>
+   <label>E-mail: {{user.email}}</label><br><br>
+   <label>Tempo de experiência: {{user.tempoExperiencia}}</label><br><br>
+   <label>Fale sobre você: {{sobreVoce}}</label><br><br>
+   <label>Tecnologias: </label>
+   <ul>
+    <li v-for="tech in tecnologias" :key="tech">{{tech}}</li>
+   </ul>
+   <label>Senioridade: {{tipoSelecionado}}</label><br><br>
+   <label>Modalidade de trabalho: {{modalidade}}</label>
+</div>
+
+</div>
+
+
+<script>
+    new Vue ({
+        el: '#app',
+        data(){
+            return{
+                user:{                  //user é objeto
+                    nome: '',
+                    email: '',
+                    tempoExperiencia: '',
+                },
+                    sobreVoce: '',
+                    tecnologias: [],              // array para armanezar os valores selecionados nos checkbox
+                    senioridade: [               //array de objetos para tipos select
+                        {id:1, nome:"Junior"},
+                        {id:2, nome:"Pleno"},
+                        {id:3, nome:"Sênior"}
+                    ],
+                    tipoSelecionado: 'Junior',
+                    modalidade: 'remoto',
+                    resultado: false
+                
+               
+            }
+        },
+        methods:{
+           enviar(){
+            alert("Cadastrado com sucesso!")
+            this.resultado = true;
+           }
+            
+           
+        }
+       
+    })
+</script>
+
+<style scoped>
+    form{
+        margin: 5px;
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        margin-left: 25%;
+    }
+    label{
+        font-size: 20px;
+    }
+    h2, h1{
+        text-align: center;
+    }
+    h1{
+        font-family: sans-serif;
+        color:rgba(165, 42, 42, 0.621) ;
+    }
+
+    body{
+        background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(247, 191, 191));
+    }
+
+    button{
+        background-color:rgba(165, 42, 42, 0.621) ;
+        color: aliceblue;
+        font-size: 15px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        width: 100px;
+        height: 30px;
+        margin-left: 45%;
+    }
+    input, textarea, select{
+        border:none;
+        border-radius: 8px;
+        font-size: 15px;
+        height: 25px;
+    }
+    textarea{
+        height: 50px;
+    }
+    span{
+        font-size: 20px;
+    }
+
+    
+        
+</style>
